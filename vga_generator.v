@@ -31,7 +31,7 @@ module vga_generator(
   wire clk_reset = 0;
   wire clk_locked = 1;
   // clock generator IP core
-  clk_25mhz clkgen
+  clock_generator clkgen
   (
     .CLK_IN1(CLK_100MHz),
     .CLK_OUT1(clk_pixel),
@@ -40,15 +40,15 @@ module vga_generator(
   );
 
     // VGA timing parameters (in pixels)
-    localparam  H_SYNC_FRONT_PORCH = 16;
-    localparam  H_SYNC_WIDTH       = 96;
-    localparam  H_SYNC_BACK_PORCH  = 48;
-    localparam  H_ACTIVE_PIXELS    = 640;
+    localparam  H_SYNC_FRONT_PORCH = 110;
+    localparam  H_SYNC_WIDTH       = 40;
+    localparam  H_SYNC_BACK_PORCH  = 220;
+    localparam  H_ACTIVE_PIXELS    = 1280;
 
-    localparam  V_ACTIVE_PIXELS    = 480;
-    localparam  V_SYNC_FRONT_PORCH = 10;
-    localparam  V_SYNC_WIDTH       = 2;
-    localparam  V_SYNC_BACK_PORCH  = 33;
+    localparam  V_ACTIVE_PIXELS    = 720;
+    localparam  V_SYNC_FRONT_PORCH = 5;
+    localparam  V_SYNC_WIDTH       = 5;
+    localparam  V_SYNC_BACK_PORCH  = 20;
 
     // VGA timings https://timetoexplore.net/blog/video-timings-vga-720p-1080p
     localparam HS_STA = H_SYNC_FRONT_PORCH;              // horizontal sync start
@@ -60,12 +60,12 @@ module vga_generator(
     localparam LINE   = H_SYNC_FRONT_PORCH + H_SYNC_WIDTH + H_SYNC_BACK_PORCH + H_ACTIVE_PIXELS;             // complete line (pixels)
     localparam SCREEN = V_ACTIVE_PIXELS + V_SYNC_FRONT_PORCH + V_SYNC_WIDTH + V_SYNC_BACK_PORCH;             // complete screen (lines)
 
-    reg[9:0] h_pos; // horizontal position
-    reg[9:0] v_pos; // vertical position
+    reg[15:0] h_pos; // horizontal position
+    reg[15:0] v_pos; // vertical position
 
     // generate sync pulses (active-low)
-    assign HSync = ~((h_pos >= HS_STA) & (h_pos < HS_END));
-    assign VSync = ~((v_pos >= VS_STA) & (v_pos < VS_END));
+    assign HSync = ((h_pos >= HS_STA) & (h_pos < HS_END));
+    assign VSync = ((v_pos >= VS_STA) & (v_pos < VS_END));
 
     // make some kind of color gradient?
     assign Red   = h_pos[2:0];
