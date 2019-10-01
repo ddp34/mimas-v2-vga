@@ -18,9 +18,13 @@ module gbc_display_capture(
   assign o_vramWriteAddr = (H_PIXELS * v_pos) + h_pos;
   assign o_vramDataOut = {i_gbcPixelData[0],i_gbcPixelData[0],i_gbcPixelData[0],i_gbcPixelData[1],i_gbcPixelData[1],i_gbcPixelData[1],i_gbcPixelData[2],i_gbcPixelData[2]};
 
-  always @(negedge i_gbcDCLK)
-  begin
-    if(i_gbcCLS) begin
+  always @(negedge i_gbcDCLK or negedge i_gbcSPS) begin
+    if (~i_gbcSPS) begin
+      // end-of-frame
+      h_pos <= 0;
+      v_pos <= 0;
+    end
+    else if(i_gbcCLS) begin
       if (h_pos == H_PIXELS) begin
         // end of horizontal line
         h_pos <= 0;
