@@ -1,12 +1,12 @@
 `timescale 1ns / 1ps
 
 module gbc_display_capture(
-  input wire GBC_DCLK,
-  input wire GBC_CLS,
-  input wire GBC_SPS,
-  input wire  [2:0] GBC_PIXEL_DATA,
-  output wire [14:0] VRAM_WRITE_ADDR,
-  output wire  [7:0] VRAM_WRITE_DATA
+  input wire i_gbcDCLK,
+  input wire i_gbcCLS,
+  input wire i_gbcSPS,
+  input wire  [2:0] i_gbcPixelData,
+  output wire [14:0] o_vramWriteAddr,
+  output wire  [7:0] o_vramDataOut
   );
 
   localparam  H_PIXELS = 160;
@@ -15,12 +15,12 @@ module gbc_display_capture(
   reg[7:0] h_pos;
   reg[7:0] v_pos;
 
-  assign VRAM_WRITE_ADDR = (H_PIXELS * v_pos) + h_pos;
-  assign VRAM_WRITE_DATA = {GBC_PIXEL_DATA[0],GBC_PIXEL_DATA[0],GBC_PIXEL_DATA[0],GBC_PIXEL_DATA[1],GBC_PIXEL_DATA[1],GBC_PIXEL_DATA[1],GBC_PIXEL_DATA[2],GBC_PIXEL_DATA[2]};
+  assign o_vramWriteAddr = (H_PIXELS * v_pos) + h_pos;
+  assign o_vramDataOut = {i_gbcPixelData[0],i_gbcPixelData[0],i_gbcPixelData[0],i_gbcPixelData[1],i_gbcPixelData[1],i_gbcPixelData[1],i_gbcPixelData[2],i_gbcPixelData[2]};
 
-  always @(negedge GBC_DCLK)
+  always @(negedge i_gbcDCLK)
   begin
-    if(GBC_CLS) begin
+    if(i_gbcCLS) begin
       if (h_pos == H_PIXELS) begin
         // end of horizontal line
         h_pos <= 0;

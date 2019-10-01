@@ -75,12 +75,12 @@ module vga_generator(
     wire [14:0] gbc_vram_write_addr;
     wire [7:0] gbc_vram_write_data;
     gbc_display_capture cap(
-      .GBC_DCLK(IO_P6[7]),
-      .GBC_CLS(IO_P6[6]),
-      .GBC_SPS(IO_P6[5]),
-      .GBC_PIXEL_DATA(IO_P6[3:1]),
-      .VRAM_WRITE_ADDR(gbc_vram_write_addr),
-      .VRAM_WRITE_DATA(gbc_vram_write_data)
+      .i_gbcDCLK(IO_P6[7]),
+      .i_gbcCLS(IO_P6[6]),
+      .i_gbcSPS(IO_P6[5]),
+      .i_gbcPixelData(IO_P6[3:1]),
+      .o_vramWriteAddr(gbc_vram_write_addr),
+      .o_vramDataOut(gbc_vram_write_data)
       );
 
     wire [VRAM_ADDR_WIDTH-1:0] pixel_offset = (160 * v_pos) + h_pos;
