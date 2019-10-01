@@ -83,7 +83,7 @@ module vga_generator(
       .o_vramDataOut(gbc_vram_write_data)
       );
 
-    wire [VRAM_ADDR_WIDTH-1:0] pixel_offset = (160 * v_pos) + h_pos;
+    wire [VRAM_ADDR_WIDTH-1:0] pixel_offset = (160 * v_pos) + h_pos - (H_SYNC_FRONT_PORCH + H_SYNC_WIDTH + H_SYNC_BACK_PORCH);
 
     sram #(
       .ADDR_WIDTH(VRAM_ADDR_WIDTH),
@@ -119,7 +119,7 @@ module vga_generator(
 
     always @(posedge clk_pixel)
     begin
-      if (h_pos == LINE-1)
+      if (h_pos == LINE)
       begin
         h_pos <= 0;
         v_pos <= v_pos + 1;
@@ -128,7 +128,7 @@ module vga_generator(
       begin
         h_pos <= h_pos + 1;
       end
-      if (v_pos == SCREEN-1)
+      if (v_pos == SCREEN)
       begin
         v_pos <= 0;
       end
