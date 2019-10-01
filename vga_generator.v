@@ -20,12 +20,13 @@
 //////////////////////////////////////////////////////////////////////////////////
 module vga_generator(
   input wire CLK_100MHz,
-  input wire [5:0] Switch,
+  input wire [7:0] IO_P6,
   output wire HSync,
   output wire VSync,
   output reg [2:0] Red,
   output reg [2:0] Green,
-  output reg [1:0] Blue
+  output reg [1:0] Blue,
+  output reg [7:0] LED
   );
 
     wire clk_pixel;
@@ -67,33 +68,58 @@ module vga_generator(
     localparam  VRAM_ADDR_WIDTH = 15; // log2(vram_size), rounded up
     localparam  VRAM_DATA_WIDTH = 8;  // 8-bit color
 
-    reg  [VRAM_ADDR_WIDTH-1:0] vram_address;
     wire [VRAM_DATA_WIDTH-1:0] vram_out;
-    reg  [VRAM_DATA_WIDTH-1:0] vram_data_in;
     wire vga_in_window = (h_pos > H_SYNC_FRONT_PORCH + H_SYNC_WIDTH + H_SYNC_BACK_PORCH) & (h_pos < H_SYNC_FRONT_PORCH + H_SYNC_WIDTH + H_SYNC_BACK_PORCH + 160) & (v_pos < 144);
+
+    // gbc video capture
+    wire [14:0] gbc_vram_write_addr;
+    wire [7:0] gbc_vram_write_data;
+    gbc_display_capture cap(
+      .GBC_DCLK(IO_P6[7]),
+      .GBC_CLS(IO_P6[6]),
+      .GBC_SPS(IO_P6[5]),
+      .GBC_PIXEL_DATA(IO_P6[3:1]),
+      .VRAM_WRITE_ADDR(gbc_vram_write_addr),
+      .VRAM_WRITE_DATA(gbc_vram_write_data)
+      );
+
+    wire [VRAM_ADDR_WIDTH-1:0] pixel_offset = (160 * v_pos) + h_pos;
 
     sram #(
       .ADDR_WIDTH(VRAM_ADDR_WIDTH),
       .DATA_WIDTH(VRAM_DATA_WIDTH),
       .DEPTH(VRAM_SIZE))
       vram (
-      .CLK_IN(clk_pixel),
-      .INPUT_ADDR(vram_address),
-      .WRITE_ENABLE(~Switch[5]),
-      .INPUT_DATA(vram_data_in), // always reading
-      .OUTPUT_DATA(vram_out)
+      .i_clkRead(clk_pixel),
+      .i_clkWrite(IO_P6[7]), // write on falling edge of GBC DCLK
+      .i_readAddr(pixel_offset),
+      .i_writeAddr(gbc_vram_write_addr),
+      .i_writeEnable(IO_P6[6]), // write during CLS pulse
+      .i_dataIn(gbc_vram_write_data),
+      .o_dataOut(vram_out)
     );
+
+    reg[7:0] frame_counter;
+    always @(negedge IO_P6[5]) begin
+      if (frame_counter == 60) begin
+        frame_counter <= 0;
+        LED[7] <= ~LED[7];
+      end
+      else begin
+        frame_counter <= frame_counter + 1;
+      end
+    end
 
     reg[15:0] h_pos; // horizontal position
     reg[15:0] v_pos; // vertical position
 
-    // generate sync pulses (active-low)
+    // generate sync pulses (active-high)
     assign HSync = ((h_pos >= HS_STA) & (h_pos < HS_END));
     assign VSync = ((v_pos >= VS_STA) & (v_pos < VS_END));
 
     always @(posedge clk_pixel)
     begin
-      if (h_pos == LINE)
+      if (h_pos == LINE-1)
       begin
         h_pos <= 0;
         v_pos <= v_pos + 1;
@@ -102,19 +128,14 @@ module vga_generator(
       begin
         h_pos <= h_pos + 1;
       end
-      if (v_pos == SCREEN)
+      if (v_pos == SCREEN-1)
       begin
         v_pos <= 0;
       end
 
-      vram_address <= (v_pos * H_ACTIVE_PIXELS) + h_pos;
-      vram_data_in[7:5] <= h_pos[2:0];
-      vram_data_in[4:2] <= v_pos[3:1];
-      vram_data_in[1:0] <= {v_pos[3], h_pos[3]};
-
-      Red   <= (vga_in_window) ? vram_out[7:5] : 0;
-      Green <= (vga_in_window) ? vram_out[4:2] : 0;
-      Blue  <= (vga_in_window) ? vram_out[1:0] : 0;
+      Red   <= (vga_in_window) ? vram_out[7:5] : 3'd0;
+      Green <= (vga_in_window) ? vram_out[4:2] : 3'd0;
+      Blue  <= (vga_in_window) ? vram_out[1:0] : 2'd0;
 
     end
 endmodule
