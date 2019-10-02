@@ -1,0 +1,47 @@
+INFO:sim:172 - Generating IP...
+Resolving generics for 'clk_25mhz'...
+Applying external generics to 'clk_25mhz'...
+Delivering associated files for 'clk_25mhz'...
+WARNING:sim - Component clk_wiz_v3_6 does not have a valid model name for
+   Verilog synthesis
+Delivering EJava files for 'clk_25mhz'...
+Delivered 3 files into directory
+/home/darian/sandbox/fpga/vga-implementation/ipcore_dir/tmp/_cg/clk_25mhz
+Delivered 1 file into directory
+/home/darian/sandbox/fpga/vga-implementation/ipcore_dir/tmp/_cg/clk_25mhz
+Generating ASY schematic symbol...
+Loading device for application Rf_Device from file '6slx9.nph' in environment
+/opt/xilinx/14.7/ISE_DS/ISE/.
+INFO:sim:949 - Finished generation of ASY schematic symbol.
+Generating SYM schematic symbol for 'clk_25mhz'...
+Generating ISE project...
+XCO file found: clk_25mhz.xco
+XMDF file found: clk_25mhz_xmdf.tcl
+Adding
+/home/darian/sandbox/fpga/vga-implementation/ipcore_dir/tmp/_cg/clk_25mhz.asy
+-view all -origin_type imported
+Adding
+/home/darian/sandbox/fpga/vga-implementation/ipcore_dir/tmp/_cg/clk_25mhz.ucf
+-view all -origin_type created
+Adding
+/home/darian/sandbox/fpga/vga-implementation/ipcore_dir/tmp/_cg/clk_25mhz.v
+-view all -origin_type created
+INFO:HDLCompiler:1845 - Analyzing Verilog file
+   "/home/darian/sandbox/fpga/vga-implementation/ipcore_dir/tmp/_cg/clk_25mhz.v"
+   into library work
+INFO:ProjectMgmt - Parsing design hierarchy completed successfully.
+Adding
+/home/darian/sandbox/fpga/vga-implementation/ipcore_dir/tmp/_cg/clk_25mhz.veo
+-view all -origin_type imported
+INFO:TclTasksC:2116 - The automatic calculation of top has been turned-off.
+   Please set the new top explicitly by running the "project set top" command.
+   To re-calculate the new top automatically, set the "Auto Implementation Top"
+   property to true.
+Top level has been set to "/clk_25mhz"
+Generating README file...
+Generating FLIST file...
+INFO:sim:948 - Finished FLIST file generation.
+Launching README viewer...
+Moving files to output directory...
+Finished moving files to output directory
+Wrote CGP file for project 'clk_25mhz'.
