@@ -75,3 +75,5 @@ _xmsgs/
 
 # binary programming files
 *.bin
+
+tmp/
