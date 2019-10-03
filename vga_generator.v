@@ -47,7 +47,7 @@ module vga_generator(
     localparam  VRAM_DATA_WIDTH = 8;  // 8-bit color
 
     wire [VRAM_DATA_WIDTH-1:0] vram_out;
-    wire vga_in_window = active_pixel & (x_pos < 160) & (y_pos < 144);
+    wire vga_in_window = active_pixel & (x_pos < GBC_H_PIXELS) & (y_pos < GBC_V_PIXELS);
 
     // gbc video capture
     wire [14:0] gbc_vram_write_addr;
