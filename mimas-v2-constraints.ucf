@@ -166,24 +166,24 @@ CONFIG VCCAUX = "3.3" ;
 ###################################################################################################################################################
 #                                                   HEADER P6                                                                                     #
 ###################################################################################################################################################
-    NET "IO_P6[7]"                   LOC = U7      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 1
-    NET "IO_P6[6]"                   LOC = V7      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 2
-    NET "IO_P6[5]"                   LOC = T4      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 3
-    NET "IO_P6[4]"                   LOC = V4      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 4
-    NET "IO_P6[3]"                   LOC = U5      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 5
-    NET "IO_P6[2]"                   LOC = V5      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 6
-    NET "IO_P6[1]"                   LOC = R3      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 7
+    #NET "IO_P6[7]"                   LOC = U7      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 1
+    #NET "IO_P6[6]"                   LOC = V7      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 2
+    #NET "IO_P6[5]"                   LOC = T4      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 3
+    #NET "IO_P6[4]"                   LOC = V4      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 4
+    #NET "IO_P6[3]"                   LOC = U5      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 5
+    #NET "IO_P6[2]"                   LOC = V5      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 6
+    #NET "IO_P6[1]"                   LOC = R3      | CLOCK_DEDICATED_ROUTE = TRUE | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 7
     #NET "IO_P6[0]"                   LOC = T3      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 8
 
 ###################################################################################################################################################
 #                                                   HEADER P7                                                                                     #
 ###################################################################################################################################################
-    #NET "IO_P7[7]"                   LOC = U8      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 1
-    #NET "IO_P7[6]"                   LOC = V8      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 2
-    #NET "IO_P7[5]"                   LOC = R8      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 3
-    #NET "IO_P7[4]"                   LOC = T8      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 4
-    #NET "IO_P7[3]"                   LOC = R5      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 5
-    #NET "IO_P7[2]"                   LOC = T5      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 6
+    NET "IO_P7[7]"                   LOC = U8      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 1
+    NET "IO_P7[6]"                   LOC = V8      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 2
+    NET "IO_P7[5]"                   LOC = R8      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 3
+    NET "IO_P7[4]"                   LOC = T8      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 4
+    NET "IO_P7[3]"                   LOC = R5      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 5
+    NET "IO_P7[2]"                   LOC = T5      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 6
     #NET "IO_P7[1]"                   LOC = T9      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 7
     #NET "IO_P7[0]"                   LOC = V9      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 8
 
@@ -192,7 +192,7 @@ CONFIG VCCAUX = "3.3" ;
 ###################################################################################################################################################
     #NET "IO_P8[7]"                  LOC = R11     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 1
     #NET "IO_P8[6]"                  LOC = T11     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 2
-    #NET "IO_P8[5]"                  LOC = R10     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 3
+    NET "IO_P8[5]"                  LOC = R10     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 3
     #NET "IO_P8[4]"                  LOC = T10     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 4
     #NET "IO_P8[3]"                  LOC = U13     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 5
     #NET "IO_P8[2]"                  LOC = V13     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 6
@@ -202,8 +202,8 @@ CONFIG VCCAUX = "3.3" ;
 ###################################################################################################################################################
 #                                                   HEADER P9                                                                                     #
 ###################################################################################################################################################
-    #NET "IO_P9[7]"                 LOC = H17      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 1
-    #NET "IO_P9[6]"                 LOC = H18      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 2
+    NET "IO_P9[7]"                 LOC = H17      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 1
+    NET "IO_P9[6]"                 LOC = H18      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 2
     #NET "IO_P9[5]"                 LOC = J16      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 3
     #NET "IO_P9[4]"                 LOC = J18      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 4
     #NET "IO_P9[3]"                 LOC = K15      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 5

@@ -4,13 +4,15 @@
 //////////////////////////////////////////////////////////////////////////////////
 module vga_generator(
   input wire CLK_100MHz,
-  input wire [7:0] IO_P6,
+  input wire [7:2] IO_P7,
+  input wire [5:5] IO_P8,
+  input wire [7:6] IO_P9,
   output wire HSync,
   output wire VSync,
   output reg [2:0] Red,
   output reg [2:0] Green,
   output reg [1:0] Blue,
-  output reg [7:0] LED
+  output reg [7:7] LED
   );
 
     // clock generator IP core
@@ -53,10 +55,10 @@ module vga_generator(
     wire [14:0] gbc_vram_write_addr;
     wire [7:0] gbc_vram_write_data;
     gbc_display_capture cap(
-      .i_gbcDCLK(IO_P6[7]),
-      .i_gbcCLS(IO_P6[6]),
-      .i_gbcSPS(IO_P6[5]),
-      .i_gbcPixelData(IO_P6[3:1]),
+      .i_gbcDCLK(IO_P8[5]),
+      .i_gbcSPS(IO_P9[7]),
+      .i_gbcSPL(IO_P9[6]),
+      .i_gbcPixelData(IO_P7[7:2]),
       .o_vramWriteAddr(gbc_vram_write_addr),
       .o_vramDataOut(gbc_vram_write_data)
       );
@@ -69,17 +71,17 @@ module vga_generator(
       .DEPTH(VRAM_SIZE))
       vram (
       .i_clkRead(clk_pixel),
-      .i_clkWrite(IO_P6[7]), // write on falling edge of GBC DCLK
+      .i_clkWrite(~IO_P8[5]), // write on falling edge of GBC DCLK
       .i_readAddr(vram_read_addr),
       .i_writeAddr(gbc_vram_write_addr),
-      .i_writeEnable(IO_P6[6]), // write during CLS pulse
+      .i_writeEnable(1),
       .i_dataIn(gbc_vram_write_data),
       .o_dataOut(vram_out)
     );
 
     // debug, blink every second if the frame signal is working correctly
     reg[7:0] frame_counter;
-    always @(negedge IO_P6[5]) begin
+    always @(negedge IO_P9[7]) begin
       if (frame_counter == 60) begin
         frame_counter <= 0;
         LED[7] <= ~LED[7];

@@ -2,9 +2,9 @@
 
 module gbc_display_capture(
   input wire i_gbcDCLK,
-  input wire i_gbcCLS,
   input wire i_gbcSPS,
-  input wire  [2:0] i_gbcPixelData,
+  input wire i_gbcSPL,
+  input wire  [5:0] i_gbcPixelData,
   output wire [14:0] o_vramWriteAddr,
   output wire  [7:0] o_vramDataOut
   );
@@ -16,19 +16,19 @@ module gbc_display_capture(
   reg[7:0] v_pos;
 
   assign o_vramWriteAddr = (H_PIXELS * v_pos) + h_pos;
-  assign o_vramDataOut = {i_gbcPixelData[0],i_gbcPixelData[0],i_gbcPixelData[0],i_gbcPixelData[1],i_gbcPixelData[1],i_gbcPixelData[1],i_gbcPixelData[2],i_gbcPixelData[2]};
+  assign o_vramDataOut = {i_gbcPixelData[5],i_gbcPixelData[4],1'b1,i_gbcPixelData[3],i_gbcPixelData[2],1'b1,i_gbcPixelData[1],i_gbcPixelData[0]};
 
-  always @(negedge i_gbcDCLK or negedge i_gbcSPS or negedge i_gbcCLS) begin
+  always @(negedge i_gbcDCLK or negedge i_gbcSPS or posedge i_gbcSPL) begin
     if (~i_gbcSPS) begin
       // end-of-frame
       h_pos <= 0;
       v_pos <= 0;
     end
-    else if (~i_gbcCLS) begin
-      // end-of-line
+    else if (i_gbcSPL) begin
+      // start-of-line
       h_pos <= 0;
     end
-    else if(i_gbcCLS) begin
+    else begin
       if (h_pos == H_PIXELS) begin
         // end of horizontal line
         h_pos <= 0;

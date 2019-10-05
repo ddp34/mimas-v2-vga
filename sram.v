@@ -13,7 +13,7 @@ module sram #(parameter ADDR_WIDTH=8, DATA_WIDTH=8, DEPTH=256) (
 
     reg [DATA_WIDTH-1:0] memory_array [0:DEPTH-1];
 
-    always @(negedge i_clkWrite) begin
+    always @(posedge i_clkWrite) begin
       if(i_writeEnable) begin
         memory_array[i_writeAddr] <= i_dataIn;
       end
